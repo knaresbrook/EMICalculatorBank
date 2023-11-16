@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   },
   summaryform: {
     backgroundColor: "white",
-    marginTop: 10,
+    marginTop: 7,
     padding: 20,
     borderRadius: 10,
     shadowColor: "black",

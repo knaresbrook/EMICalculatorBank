@@ -1,29 +1,33 @@
 import { VictoryPie, VictoryLegend, VictoryLabel } from "victory-native";
-import { StyleSheet, View, Text } from "react-native";
+import { TouchableOpacity, StyleSheet, View, Text } from "react-native";
 import { Svg } from "react-native-svg";
 import React, { useContext } from "react";
 import AppContext from "../constants/globalvar";
+import { useNavigation } from "@react-navigation/native";
 
 export default function LoanChart() {
   const myContext = useContext(AppContext);
+  const navigation = useNavigation();
+
   return (
-    <View style={styles.summarychart}>
+    <View>
       {myContext.label ? (
-        <View>
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+        <View style={styles.summarychart}>
+          {/* <Text style={{ fontSize: 20, fontWeight: "bold" }}>
             Loan Interest & Principle Pay
-          </Text>
-          <Svg width={250} height={330} viewBox="-25 45 390 200">
+          </Text> */}
+
+          <Svg width={250} height={280} viewBox="-25 45 365 200">
             <VictoryPie
               standalone={false}
-              width={350}
-              height={400}
+              width={360}
+              height={420}
               data={myContext.graphicData}
-              innerRadius={50}
-              labelRadius={20}
+              innerRadius={35}
+              labelRadius={45}
               style={{
                 labels: {
-                  fontSize: 28,
+                  fontSize: 24,
                   fontWeight: "bold",
                   fill: "white",
                 },
@@ -51,6 +55,12 @@ export default function LoanChart() {
               labelComponent={<VictoryLabel angle={360} />}
             />
           </Svg>
+          <TouchableOpacity
+            style={[styles.screenButton, styles.inputbutton]}
+            onPress={() => navigation.navigate("LoanSchedule")}
+          >
+            <Text style={styles.buttonText}>Loan Amortization Schedule</Text>
+          </TouchableOpacity>
         </View>
       ) : null}
     </View>
@@ -60,9 +70,9 @@ export default function LoanChart() {
 const styles = StyleSheet.create({
   summarychart: {
     backgroundColor: "white",
-    height: 280,
-    marginTop: 10,
-    paddingLeft: 50,
+    height: 260,
+    marginTop: 8,
+    paddingLeft: 27,
     borderRadius: 10,
     shadowColor: "black",
     shadowOffset: {
@@ -72,5 +82,31 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  screenButton: {
+    marginRight: 0,
+    height: 30,
+    marginLeft: 0,
+    marginTop: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
+    backgroundColor: "darkorange",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#fff",
+  },
+  buttonText: {
+    fontWeight: "bold",
+    color: "black",
+    fontSize: 20,
+    textAlign: "center",
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 8,
+  },
+  inputbutton: {
+    width: "95%",
+    height: "18%",
+    alignContent: "center",
   },
 });

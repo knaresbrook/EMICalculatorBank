@@ -1,53 +1,30 @@
 import {
   StyleSheet,
-  Text,
   View,
-  TextInput,
-  SafeAreaView,
-  ScrollView,
-  FlatList,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
-import React, { useState } from "react";
+import React from "react";
+import LoanInput from "./loaninput";
+import LoanSummary from "./loansummary";
+import LoanChart from "./loanchart";
 
-export default function HomeLoan() {
-  btnCalculate = () => {
-    const intRate = Number(InterestRate) / 12 / 100;
-    const noOfMonths = Number(Tenure) * 12;
-    const powerValue = Math.pow(1 + intRate, noOfMonths);
-
-    let _MonthlyEMI =
-      (Number(LoanAmount) * intRate * powerValue) / (powerValue - 1);
-    let _TotalAmountPayable = _MonthlyEMI * noOfMonths;
-    let _TotalInterestPayable = _TotalAmountPayable - Number(LoanAmount);
-
-    setMonthlyEMI(Math.round(_MonthlyEMI).toString());
-    setTotalAmountPayable(Math.round(_TotalAmountPayable).toString());
-    setTotalInterestPayable(Math.round(_TotalInterestPayable).toString());
-
-    setLabel(true);
-    // const wantedGraphicData = [
-    //   { x: "Total Interest", y: _TotalInterestPayable },
-    //   { x: "Principle", y: Number(LoanAmount) },
-    // ];
-
-    const wantedGraphicData = [
-      { x: "      80%", y: _TotalInterestPayable },
-      { x: "60%     ", y: Number(LoanAmount) },
-    ];
-
-    setGraphicData(wantedGraphicData);
-
-    loanSchedule(LoanAmount, Tenure, MonthlyEMI);
-  };
-
-  return <SafeAreaView style={styles.container}></SafeAreaView>;
+export default function HomeLoans() {
+  return (
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.container}>
+        <LoanInput />
+        <LoanSummary />
+        <LoanChart />
+      </View>
+    </TouchableWithoutFeedback>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: "start",
-    marginTop: 80,
+    marginTop: 5,
     paddingHorizontal: 20,
     backgroundColor: "#f5f5f5",
   },

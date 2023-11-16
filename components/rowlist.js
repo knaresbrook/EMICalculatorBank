@@ -1,7 +1,15 @@
-import react, { memo } from "react";
+import { memo } from "react";
 import { Text, View, StyleSheet } from "react-native";
 
 const RowList = (props) => {
+  typeof Number(props.data.Month) ? (
+    <Text style={{ backgroundColor: "darkorange", color: "white" }}>
+      {props.data.Month}
+    </Text>
+  ) : (
+    <Text style={styles.label}>{props.data.Month}</Text>
+  );
+
   return (
     <View
       style={{
@@ -10,7 +18,15 @@ const RowList = (props) => {
         marginTop: 0,
       }}
     >
-      <Text style={styles.label}>{props.data.Month}</Text>
+      {isNaN(props.data.Month) ? (
+        <Text style={[styles.label, styles.labelfirstcol]}>
+          {props.data.Month}
+        </Text>
+      ) : (
+        <Text style={[styles.label, styles.labelfirstcol, styles.labelorange]}>
+          {props.data.Month}
+        </Text>
+      )}
       <Text style={styles.label}>{props.data.Principal}</Text>
       <Text style={styles.label}>{props.data.Interest}</Text>
       <Text style={styles.label}>{props.data.TotalPayment}</Text>
@@ -22,11 +38,18 @@ const RowList = (props) => {
 const styles = StyleSheet.create({
   label: {
     marginLeft: 0,
-    padding: 2,
-    width: 59,
+    padding: 3,
+    width: 68,
     textAlign: "right",
     borderColor: "darkorange",
     borderWidth: 1,
+  },
+  labelfirstcol: {
+    textAlign: "center",
+  },
+  labelorange: {
+    backgroundColor: "darkorange",
+    color: "white",
   },
 });
 
