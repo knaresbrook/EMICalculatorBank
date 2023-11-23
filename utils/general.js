@@ -3,7 +3,7 @@ import * as MailComposer from "expo-mail-composer";
 import * as Print from "expo-print";
 import { shareAsync } from "expo-sharing";
 
-const sendEmail = async (file, emailAddr, myContext) => {
+export async function sendEmail(file, emailAddr, myContext) {
   var options = {};
 
   options = {
@@ -25,18 +25,16 @@ const sendEmail = async (file, emailAddr, myContext) => {
   promise.then(
     (result) => {
       myContext.setStatus("Status: email " + result.status);
-      Alert.alert("Info", result.status, [{ text: "OK" }]);
+      console.log(result.status);
     },
     (error) => {
       myContext.setStatus("Status: email " + error.status);
-      Alert.alert("Error", error.status, [{ text: "OK" }]);
+      console.log(error.status);
     }
   );
-};
+}
 
-module.exports.sendEmail = sendEmail;
-
-async function sharePDF(LoanAmount, InterestRate, Tenure, items) {
+export async function sharePDF(LoanAmount, InterestRate, Tenure, items) {
   try {
     var htmlText = htmlNoContext(LoanAmount, InterestRate, Tenure, items);
     const { uri } = await Print.printToFileAsync({
@@ -46,13 +44,11 @@ async function sharePDF(LoanAmount, InterestRate, Tenure, items) {
 
     await shareAsync(uri, { UTI: ".pdf", mimeType: "application/pdf" });
   } catch (error) {
-    Alert.alert("Error", error.message, [{ text: "OK" }]);
+    console.log(error);
   }
 }
 
-module.exports.sharePDF = sharePDF;
-
-async function GeneratePDF(myContext, emailAddress) {
+export async function GeneratePDF(myContext, emailAddress) {
   try {
     var htmlText = htmlContext(myContext);
     const { uri } = await Print.printToFileAsync({
@@ -62,13 +58,11 @@ async function GeneratePDF(myContext, emailAddress) {
 
     sendEmail([uri], emailAddress, myContext);
   } catch (error) {
-    Alert.alert("Error", error.message, [{ text: "OK" }]);
+    console.log(error);
   }
 }
 
-module.exports.GeneratePDF = GeneratePDF;
-
-const htmlContext = (myContext) => {
+export function htmlContext(myContext) {
   return `    
 <html>
 <head>
@@ -125,11 +119,9 @@ const htmlContext = (myContext) => {
       </body>
     </html>
   `;
-};
+}
 
-module.exports.htmlContext = htmlContext;
-
-const htmlNoContext = (LoanAmount, InterestRate, Tenure, items) => {
+export function htmlNoContext(LoanAmount, InterestRate, Tenure, items) {
   return `    
 <html>
 <head>
@@ -186,11 +178,9 @@ const htmlNoContext = (LoanAmount, InterestRate, Tenure, items) => {
       </body>
     </html>
   `;
-};
+}
 
-module.exports.htmlNoContext = htmlNoContext;
-
-const btnClear = (myContext) => {
+export function btnClear(myContext) {
   try {
     myContext.setLoanAmount("");
     myContext.setInterestRate("");
@@ -204,13 +194,11 @@ const btnClear = (myContext) => {
     myContext.setEmail("");
     myContext.setIsReady(false);
   } catch (error) {
-    Alert.alert("Error", error.message, [{ text: "OK" }]);
+    console.log(error);
   }
-};
+}
 
-module.exports.btnClear = btnClear;
-
-const btnCalculate = (myContext) => {
+export function btnCalculate(myContext) {
   try {
     if (Number(myContext.LoanAmount) < 1000) {
       Alert.alert("Warning", "Minimum Loan Amount is 1000 Rs/=", [
@@ -255,13 +243,11 @@ const btnCalculate = (myContext) => {
       myContext.setIsReady(true);
     }
   } catch (error) {
-    Alert.alert("Error", error.message, [{ text: "OK" }]);
+    console.log(error);
   }
-};
+}
 
-module.exports.btnCalculate = btnCalculate;
-
-const loanSchedule = (_MonthlyEMI, myContext) => {
+export function loanSchedule(_MonthlyEMI, myContext) {
   try {
     principleAmt = 0;
     interestAmt = 0;
@@ -351,8 +337,6 @@ const loanSchedule = (_MonthlyEMI, myContext) => {
     myContext.setItems(itemsList);
     myContext.setLabel(true);
   } catch (error) {
-    Alert.alert("Error", error.message, [{ text: "OK" }]);
+    console.log(error);
   }
-};
-
-module.exports.loanSchedule = loanSchedule;
+}

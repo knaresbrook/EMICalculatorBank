@@ -1,10 +1,13 @@
-import { StyleSheet, View, Button } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import LoanSchedule from "./components/loanschedule";
 import LoanChart from "./components/loanchart";
 import AppContext from "./constants/globalvar";
 import React, { useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  NavigationContainer,
+  useNavigationContainerRef,
+} from "@react-navigation/native";
 import HomeLoans from "./components/homeloan";
 import MainScreen from "./components/mainscreen";
 import { sharePDF } from "./utils/general";
@@ -12,6 +15,8 @@ import { sharePDF } from "./utils/general";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const navigationRef = useNavigationContainerRef();
+
   const [LoanAmount, setLoanAmount] = useState("");
   const [InterestRate, setInterestRate] = useState("");
   const [Tenure, setTenure] = useState("");
@@ -55,7 +60,7 @@ export default function App() {
   return (
     <AppContext.Provider value={globalState}>
       <View style={styles.container}>
-        <NavigationContainer>
+        <NavigationContainer ref={navigationRef}>
           <Stack.Navigator initialRouteName="Home">
             <Stack.Screen
               name="Home"
@@ -75,14 +80,32 @@ export default function App() {
                   fontWeight: "bold",
                 },
                 headerRight: () => (
-                  <Button
+                  <TouchableOpacity
                     disabled={isready ? false : true}
-                    onPress={async () =>
-                      sharePDF(LoanAmount, InterestRate, Tenure, items)
+                    onPress={
+                      () => navigationRef.navigate("LoanSchedule")
+                      // sharePDF(LoanAmount, InterestRate, Tenure, items)
                     }
-                    title="Share PDF"
-                    color="black"
-                  />
+                    style={{
+                      backgroundColor: "transparent",
+                      paddingLeft: 15,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 17,
+                        fontWeight: "bold",
+                        width: 140,
+                        height: 48,
+                        paddingHorizontal: 12,
+                        verticalAlign: "middle",
+                        backgroundColor: "yellow",
+                        borderRadius: 10,
+                      }}
+                    >
+                      Loan Schedule
+                    </Text>
+                  </TouchableOpacity>
                 ),
               }}
             />
@@ -103,8 +126,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "start",
-    marginTop: 0,
-    paddingHorizontal: 10,
     backgroundColor: "white",
   },
 });

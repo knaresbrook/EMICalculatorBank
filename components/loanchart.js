@@ -1,5 +1,5 @@
 import { VictoryPie, VictoryLegend, VictoryLabel } from "victory-native";
-import { TouchableOpacity, StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Svg } from "react-native-svg";
 import React, { useContext } from "react";
 import AppContext from "../constants/globalvar";
@@ -17,13 +17,13 @@ export default function LoanChart() {
             Loan Interest & Principle Pay
           </Text> */}
 
-          <Svg width={250} height={280} viewBox="-25 45 365 200">
+          <Svg width={250} height={330} viewBox="-05 45 365 200">
             <VictoryPie
               standalone={false}
               width={360}
-              height={420}
+              height={300}
               data={myContext.graphicData}
-              innerRadius={35}
+              innerRadius={36}
               labelRadius={45}
               style={{
                 labels: {
@@ -44,9 +44,9 @@ export default function LoanChart() {
               title="Loan Details"
               centerTitle
               orientation="horizontal"
-              gutter={20}
+              gutter={15}
               data={[
-                { name: "Interest Payable", symbol: { fill: "green" } },
+                { name: "Interest Pay", symbol: { fill: "green" } },
                 {
                   name: "Principle Amount",
                   symbol: { fill: "darkorange" },
@@ -55,12 +55,12 @@ export default function LoanChart() {
               labelComponent={<VictoryLabel angle={360} />}
             />
           </Svg>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={[styles.screenButton, styles.inputbutton]}
             onPress={() => navigation.navigate("LoanSchedule")}
           >
             <Text style={styles.buttonText}>Loan Amortization Schedule</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       ) : null}
     </View>
@@ -69,10 +69,11 @@ export default function LoanChart() {
 
 const styles = StyleSheet.create({
   summarychart: {
+    alignItems: "center",
+    justifyContent: "space-between",
     backgroundColor: "white",
-    height: 260,
+    height: 205,
     marginTop: 8,
-    paddingLeft: 27,
     borderRadius: 10,
     shadowColor: "black",
     shadowOffset: {
@@ -86,10 +87,6 @@ const styles = StyleSheet.create({
   screenButton: {
     marginRight: 0,
     height: 30,
-    marginLeft: 0,
-    marginTop: 0,
-    paddingTop: 0,
-    paddingBottom: 0,
     backgroundColor: "darkorange",
     borderRadius: 10,
     borderWidth: 1,
@@ -105,7 +102,7 @@ const styles = StyleSheet.create({
     paddingTop: 8,
   },
   inputbutton: {
-    width: "95%",
+    width: "100%",
     height: "18%",
     alignContent: "center",
   },

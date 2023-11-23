@@ -30,14 +30,15 @@ const styles = StyleSheet.create({
   summarylabel: {
     fontSize: 18,
     marginBottom: 10,
-    marginLeft: 40,
     fontWeight: "bold",
     color: "#b4600d",
   },
   summaryform: {
+    alignItems: "center",
+    justifyContent: "space-between",
     backgroundColor: "white",
     marginTop: 7,
-    padding: 20,
+    padding: 10,
     borderRadius: 10,
     shadowColor: "black",
     shadowOffset: {

@@ -11,7 +11,6 @@ import React, { useContext, useState } from "react";
 import AppContext from "../constants/globalvar";
 import { TouchableOpacity } from "react-native";
 import { btnClear, GeneratePDF, btnCalculate } from "../utils/general";
-import { isEnabled } from "react-native/Libraries/Performance/Systrace";
 
 export default function LoanInput() {
   const myContext = useContext(AppContext);
@@ -52,7 +51,7 @@ export default function LoanInput() {
         <Text style={styles.label}>Interest Rate : </Text>
         <TextInput
           style={[styles.input, styles.inputmore]}
-          placeholder="Enter Interest Rate %"
+          placeholder="Enter Interest Rate%"
           keyboardType="numeric"
           maxLength={2}
           value={myContext.InterestRate}
@@ -63,7 +62,7 @@ export default function LoanInput() {
         <Text style={styles.label}>Tenure:</Text>
         <TextInput
           style={[styles.input, styles.inputtenure]}
-          placeholder="Enter Tenure (Yr/Mth)"
+          placeholder="Enter Tenure Years"
           maxLength={2}
           keyboardType="numeric"
           value={myContext.Tenure}
@@ -72,7 +71,7 @@ export default function LoanInput() {
       </View>
       <View style={styles.inputView}>
         <TouchableOpacity
-          style={[styles.screenButton, styles.inputbutton]}
+          style={[styles.screenButton]}
           disabled={
             myContext.LoanAmount && myContext.InterestRate && myContext.Tenure
               ? false
@@ -83,14 +82,14 @@ export default function LoanInput() {
           <Text style={styles.buttonText}>Calculate</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.screenButton, styles.inputbutton]}
+          style={[styles.screenButton]}
           disabled={myContext.isready ? false : true}
           onPress={() => setModalVisible(true)}
         >
           <Text style={styles.buttonText}>Email PDF</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.screenButton, styles.inputbutton]}
+          style={[styles.screenButton]}
           onPress={() => btnClear(myContext)}
         >
           <Text style={styles.buttonText}>Clear</Text>
@@ -118,11 +117,9 @@ export default function LoanInput() {
                 style={[styles.button, styles.buttonOpen]}
                 onPress={() => {
                   if (myContext.email == "") {
-                    Alert.alert(
-                      "Warning",
-                      "Please enter your Email Address",
-                      "Ok"
-                    );
+                    Alert.alert("Warning", "Please enter your Email Address", [
+                      { text: "OK" },
+                    ]);
                     setModalVisible(modalVisible);
                   } else {
                     setModalVisible(!modalVisible);
@@ -130,13 +127,41 @@ export default function LoanInput() {
                   }
                 }}
               >
-                <Text style={styles.textStyle}>Ok</Text>
+                <Text
+                  style={[
+                    styles.textStyle,
+                    {
+                      height: 48,
+                      width: 48,
+                      verticalAlign: "middle",
+                      fontSize: 21,
+                      backgroundColor: "#9700ae",
+                      color: "#ffffff",
+                    },
+                  ]}
+                >
+                  Ok
+                </Text>
               </Pressable>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => setModalVisible(!modalVisible)}
               >
-                <Text style={styles.textStyle}>Cancel</Text>
+                <Text
+                  style={[
+                    styles.textStyle,
+                    {
+                      fontSize: 21,
+                      height: 48,
+                      width: 66,
+                      verticalAlign: "middle",
+                      backgroundColor: "#ffffff",
+                      color: "#104e98",
+                    },
+                  ]}
+                >
+                  Cancel
+                </Text>
               </Pressable>
             </View>
           </View>
@@ -173,13 +198,17 @@ const styles = StyleSheet.create({
   },
   input: {
     marginLeft: 10,
-    height: 40,
+    fontSize: 17,
+    height: 48,
+    minHeight: 48,
     borderColor: "#ddd",
     borderWidth: 1,
     width: 175,
     marginBottom: 15,
     padding: 10,
     borderRadius: 5,
+    backgroundColor: "#ffffff",
+    color: "#595959",
   },
   screenButton: {
     marginRight: 5,
@@ -203,12 +232,10 @@ const styles = StyleSheet.create({
   },
   inputmore: {
     marginLeft: 13,
+    color: "#595959",
   },
   inputtenure: {
     marginLeft: 65,
-  },
-  inputbutton: {
-    width: "32%",
   },
   centeredView: {
     flex: 1,

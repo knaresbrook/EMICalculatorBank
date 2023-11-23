@@ -6,11 +6,18 @@ import RowList from "./rowlist.js";
 export default function LoanSchedule() {
   const myContext = useContext(AppContext);
   return (
-    <View>
+    <View
+      style={{
+        alignItems: "center",
+        justifyContent: "space-between",
+      }}
+    >
       <View
         style={{
+          alignItems: "center",
+          justifyContent: "space-between",
           flexDirection: "row",
-          marginLeft: 15,
+          marginLeft: 0,
           marginTop: 20,
           height: 35,
           backgroundColor: "darkorange",

@@ -3,7 +3,7 @@ import { Text, View, StyleSheet } from "react-native";
 
 const RowList = (props) => {
   typeof Number(props.data.Month) ? (
-    <Text style={{ backgroundColor: "darkorange", color: "white" }}>
+    <Text style={{ backgroundColor: "darkorange", color: "#ffffff" }}>
       {props.data.Month}
     </Text>
   ) : (
@@ -13,8 +13,9 @@ const RowList = (props) => {
   return (
     <View
       style={{
+        alignItems: "center",
         flexDirection: "row",
-        marginLeft: 15,
+        marginLeft: 0,
         marginTop: 0,
       }}
     >
@@ -48,8 +49,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   labelorange: {
-    backgroundColor: "darkorange",
-    color: "white",
+    backgroundColor: "#834800",
+    color: "#ffffff",
+    fontWeight: "bold",
   },
 });
 
