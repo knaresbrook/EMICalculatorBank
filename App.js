@@ -91,20 +91,7 @@ export default function App() {
                       paddingLeft: 15,
                     }}
                   >
-                    <Text
-                      style={{
-                        fontSize: 17,
-                        fontWeight: "bold",
-                        width: 140,
-                        height: 48,
-                        paddingHorizontal: 12,
-                        verticalAlign: "middle",
-                        backgroundColor: "yellow",
-                        borderRadius: 10,
-                      }}
-                    >
-                      Loan Schedule
-                    </Text>
+                    <Text style={styles.labeltext}>Loan Schedule</Text>
                   </TouchableOpacity>
                 ),
               }}
@@ -127,5 +114,25 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "start",
     backgroundColor: "white",
+  },
+  labeltext: {
+    ...Platform.select({
+      ios: {
+        paddingTop: 5,
+        height: 40,
+        width: 159,
+      },
+      android: {
+        paddingTop: 10,
+        height: 48,
+        width: 148,
+      },
+    }),
+    fontSize: 17,
+    fontWeight: "bold",
+    paddingHorizontal: 17,
+    backgroundColor: "yellow",
+    borderWidth: 3,
+    borderRadius: 10,
   },
 });

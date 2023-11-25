@@ -13,18 +13,14 @@ export default function LoanChart() {
     <View>
       {myContext.label ? (
         <View style={styles.summarychart}>
-          {/* <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-            Loan Interest & Principle Pay
-          </Text> */}
-
           <Svg width={250} height={330} viewBox="-05 45 365 200">
             <VictoryPie
               standalone={false}
               width={360}
               height={300}
               data={myContext.graphicData}
-              innerRadius={36}
-              labelRadius={45}
+              innerRadius={30}
+              labelRadius={32}
               style={{
                 labels: {
                   fontSize: 24,
@@ -44,7 +40,7 @@ export default function LoanChart() {
               title="Loan Details"
               centerTitle
               orientation="horizontal"
-              gutter={15}
+              gutter={20}
               data={[
                 { name: "Interest Pay", symbol: { fill: "green" } },
                 {
@@ -55,12 +51,6 @@ export default function LoanChart() {
               labelComponent={<VictoryLabel angle={360} />}
             />
           </Svg>
-          {/* <TouchableOpacity
-            style={[styles.screenButton, styles.inputbutton]}
-            onPress={() => navigation.navigate("LoanSchedule")}
-          >
-            <Text style={styles.buttonText}>Loan Amortization Schedule</Text>
-          </TouchableOpacity> */}
         </View>
       ) : null}
     </View>
@@ -83,27 +73,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-  },
-  screenButton: {
-    marginRight: 0,
-    height: 30,
-    backgroundColor: "darkorange",
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#fff",
-  },
-  buttonText: {
-    fontWeight: "bold",
-    color: "black",
-    fontSize: 20,
-    textAlign: "center",
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingTop: 8,
-  },
-  inputbutton: {
-    width: "100%",
-    height: "18%",
-    alignContent: "center",
   },
 });

@@ -45,7 +45,7 @@ export default function LoanSchedule() {
               fontSize: 20,
               fontWeight: "bold",
               textAlign: "center",
-              backgroundColor: "red",
+              backgroundColor: "#c42113",
               color: "white",
               height: 35,
               padding: 3,

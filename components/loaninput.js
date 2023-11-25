@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     backgroundColor: "#ffffff",
-    color: "#595959",
+    color: "#010101",
   },
   screenButton: {
     marginRight: 5,
@@ -232,7 +232,6 @@ const styles = StyleSheet.create({
   },
   inputmore: {
     marginLeft: 13,
-    color: "#595959",
   },
   inputtenure: {
     marginLeft: 65,
@@ -271,6 +270,18 @@ const styles = StyleSheet.create({
     backgroundColor: "#2196F3",
   },
   textStyle: {
+    ...Platform.select({
+      ios: {
+        paddingTop: 12,
+        height: 40,
+        width: 159,
+      },
+      android: {
+        height: 48,
+        width: 148,
+      },
+    }),
+
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
