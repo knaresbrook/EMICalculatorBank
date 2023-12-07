@@ -44,7 +44,7 @@ export async function sharePDF(LoanAmount, InterestRate, Tenure, items) {
 
     await shareAsync(uri, { UTI: ".pdf", mimeType: "application/pdf" });
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
@@ -198,7 +198,7 @@ export function btnClear(myContext) {
   }
 }
 
-export function btnCalculate(myContext) {
+export function btnCalculate(myContext, toggleValue) {
   try {
     if (Number(myContext.LoanAmount) < 1000) {
       Alert.alert("Warning", "Minimum Loan Amount is 1000 Rs/=", [
@@ -206,7 +206,11 @@ export function btnCalculate(myContext) {
       ]);
     } else {
       const intRate = Number(myContext.InterestRate) / 12 / 100;
-      const noOfMonths = Number(myContext.Tenure) * 12;
+      //const noOfMonths = Number(myContext.Tenure) * 12;
+      const noOfMonths = toggleValue
+        ? myContext.Tenure
+        : Math.round(Number(myContext.Tenure) * 12);
+
       const powerValue = Math.pow(1 + intRate, noOfMonths);
 
       let _MonthlyEMI =
@@ -239,7 +243,7 @@ export function btnCalculate(myContext) {
 
       myContext.setGraphicData(wantedGraphicData);
 
-      loanSchedule(_MonthlyEMI, myContext);
+      loanSchedule(_MonthlyEMI, myContext, toggleValue);
       myContext.setIsReady(true);
     }
   } catch (error) {
@@ -247,7 +251,7 @@ export function btnCalculate(myContext) {
   }
 }
 
-export function loanSchedule(_MonthlyEMI, myContext) {
+export function loanSchedule(_MonthlyEMI, myContext, toggleValue) {
   try {
     principleAmt = 0;
     interestAmt = 0;
@@ -256,7 +260,15 @@ export function loanSchedule(_MonthlyEMI, myContext) {
 
     currentYear = currentTime.getFullYear();
     currentMonth = currentTime.getMonth() + 1;
-    numMonths = Number(myContext.Tenure) * 12;
+
+    numMonths = toggleValue
+      ? myContext.Tenure
+      : Math.round(Number(myContext.Tenure) * 12);
+
+    console.log(myContext.Tenure);
+
+    console.log(numMonths);
+
     countMonths = 0;
     cMths = 0;
 

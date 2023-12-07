@@ -2,6 +2,7 @@ import {
   TouchableOpacity,
   View,
   Text,
+  ImageBackground,
   StyleSheet,
   Platform,
 } from "react-native";
@@ -14,6 +15,7 @@ export default function MainScreen({ navigation }) {
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
+        backgroundColor: "lightgray",
       }}
     >
       <TouchableOpacity
@@ -21,7 +23,29 @@ export default function MainScreen({ navigation }) {
         accessibityLabel="This is Home Loan button"
         onPress={() => navigation.navigate("HomeLoans")}
       >
-        <Text style={[styles.mscreen]}>Home Loans</Text>
+        <Text
+          style={{
+            textAlign: "center",
+            fontWeight: "bold",
+            fontSize: 20,
+            paddingBottom: 5,
+            color: "black",
+          }}
+        >
+          Home Loans
+        </Text>
+
+        <ImageBackground
+          source={require("../assets/homeloan.jpg")}
+          style={{
+            height: 150,
+            width: 150,
+            borderWidth: 2,
+            borderColor: "white",
+            borderRadius: 10,
+          }}
+        ></ImageBackground>
+        {/* <Text style={[styles.mscreen]}>Home Loans</Text> */}
       </TouchableOpacity>
     </View>
   );

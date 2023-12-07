@@ -2,7 +2,7 @@
   "expo": {
     "name": "emicalculator",
     "slug": "emicalculator",
-    "version": "1.0.0",
+    "version": "6.0.0",
     "orientation": "portrait",
     "icon": "./assets/applicationicon.png",
     "userInterfaceStyle": "light",
@@ -11,19 +11,15 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.mnkltd.emicalculator"
+      "bundleIdentifier": "com.mnkltd.emicalculator",
+      "buildNumber": "2"
     },
     "android": {
-      "versionCode": 1,
-      "permissions": [
-        "WRITE_EXTERNAL_STORAGE",
-        "READ_EXTERNAL_STORAGE"
-      ],
+      "versionCode": 6,
+      "permissions": ["WRITE_EXTERNAL_STORAGE", "READ_EXTERNAL_STORAGE"],
       "adaptiveIcon": {
         "foregroundImage": "./assets/applicationicon.png",
         "backgroundColor": "#ffffff"

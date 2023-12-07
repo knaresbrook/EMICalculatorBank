@@ -10,11 +10,18 @@ import {
 import React, { useContext, useState } from "react";
 import AppContext from "../constants/globalvar";
 import { TouchableOpacity } from "react-native";
-import { btnClear, GeneratePDF, btnCalculate } from "../utils/general";
+import {
+  btnClear,
+  GeneratePDF,
+  btnCalculate,
+  sharePDF,
+} from "../utils/general";
+import Toggle from "react-native-toggle-element";
 
 export default function LoanInput() {
   const myContext = useContext(AppContext);
   const [modalVisible, setModalVisible] = useState(false);
+  const [toggleValue, setToggleValue] = useState(false);
 
   const onChangeTextLoan = (text) => {
     if (+text || text == "") {
@@ -29,9 +36,22 @@ export default function LoanInput() {
   };
 
   const onChangeTextTenure = (text) => {
-    if ((+text && text <= 40) || text == "") {
+    if (+text || text == "") {
       myContext.setTenure(text);
     }
+  };
+
+  const onChangeToggleButton = (newState, tenureValue) => {
+    let oldTenure = 0;
+
+    if (!newState && tenureValue != "") {
+      console.info(newState, "yearly");
+      oldTenure = (Number(tenureValue) / 12).toString();
+    } else if (newState && tenureValue != "") {
+      console.info(newState, "monthly");
+      oldTenure = Math.round(Number(tenureValue) * 12).toString();
+    }
+    myContext.setTenure(oldTenure);
   };
 
   return (
@@ -48,12 +68,16 @@ export default function LoanInput() {
         />
       </View>
       <View style={styles.inputView}>
-        <Text style={styles.label}>Interest Rate : </Text>
+        <Text style={[styles.label]}>Interest Rate :</Text>
         <TextInput
-          style={[styles.input, styles.inputmore]}
-          placeholder="Enter Interest Rate%"
+          style={[
+            styles.input,
+            styles.inputmore,
+            { width: 70, marginLeft: 18 },
+          ]}
+          placeholder="%"
           keyboardType="numeric"
-          maxLength={2}
+          maxLength={5}
           value={myContext.InterestRate}
           onChangeText={onChangeTextInterest}
         />
@@ -61,12 +85,39 @@ export default function LoanInput() {
       <View style={styles.inputView}>
         <Text style={styles.label}>Tenure:</Text>
         <TextInput
-          style={[styles.input, styles.inputtenure]}
-          placeholder="Enter Tenure Years"
-          maxLength={2}
+          style={[
+            styles.input,
+            styles.inputtenure,
+            { width: 70, marginRight: 10 },
+          ]}
+          placeholder="Y/M"
+          maxLength={4}
           keyboardType="numeric"
           value={myContext.Tenure}
           onChangeText={onChangeTextTenure}
+        />
+        <Toggle
+          disabled={
+            myContext.LoanAmount && myContext.InterestRate && myContext.Tenure
+              ? false
+              : true
+          }
+          value={toggleValue}
+          onPress={(newState) => {
+            setToggleValue(newState);
+            onChangeToggleButton(newState, myContext.Tenure);
+          }}
+          leftTitle="Year"
+          rightTitle="Month"
+          trackBar={{
+            width: 110,
+            height: 32,
+            radius: 15,
+          }}
+          thumbButton={{
+            activeBackgroundColor: "black",
+            inActiveBackgroundColor: "pink",
+          }}
         />
       </View>
       <View style={styles.inputView}>
@@ -77,7 +128,7 @@ export default function LoanInput() {
               ? false
               : true
           }
-          onPress={() => btnCalculate(myContext)}
+          onPress={() => btnCalculate(myContext, toggleValue)}
         >
           <Text style={styles.buttonText}>Calculate</Text>
         </TouchableOpacity>
@@ -86,8 +137,24 @@ export default function LoanInput() {
           disabled={myContext.isready ? false : true}
           onPress={() => setModalVisible(true)}
         >
-          <Text style={styles.buttonText}>Email PDF</Text>
+          <Text style={styles.buttonText}>Email</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.screenButton]}
+          disabled={myContext.isready ? false : true}
+          onPress={() =>
+            sharePDF(
+              myContext.LoanAmount,
+              myContext.InterestRate,
+              myContext.Tenure,
+              myContext.items
+            )
+          }
+        >
+          <Text style={styles.buttonText}>Share</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity
           style={[styles.screenButton]}
           onPress={() => btnClear(myContext)}
@@ -186,7 +253,12 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   inputView: {
-    justifyContent: "center",
+    justifyContent: "start",
+    ...Platform.select({
+      android: {
+        marginLeft: 15,
+      },
+    }),
     flexDirection: "row",
   },
   label: {
